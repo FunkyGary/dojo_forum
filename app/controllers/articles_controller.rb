@@ -1,5 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :authenticate_user!
+  before_action :sset_article, only: [:show, :edit, :update]
 
   def index
     @articles = Article.all
@@ -18,12 +19,25 @@ class ArticlesController < ApplicationController
     end
   end
   def show
-    @article = Article.find(params[:id])
+  end
+  def edit
+  end
+  def update
+    if @article.update(article_params)
+      flash[:notice] = "article was successfully updated"
+      redirect_to admin_article_path(@article)
+    else
+      flash.now[:alert] = "article was failed to update"
+      render :edit
+    end
   end
 
   private
 
   def article_params
     params.require(:article).permit(:name, :description)
+  end
+  def set_article
+    @article = Article.find(params[:id])
   end
 end
