@@ -30,6 +30,8 @@ gem 'jbuilder', '~> 2.5'
 gem 'devise'
 # photouploader
 gem 'carrierwave'
+# fakedata
+gem 'ffaker'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
 

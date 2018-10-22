@@ -8,8 +8,8 @@
 <% end %>
 
 <%= form_for  [:admin, @article] do |f| %>
-  <%= f.label :name, "Name" %>
-  <%= f.text_field :name %>
+  <%= f.label :title, "Title" %>
+  <%= f.text_field :title %>
 
   <%= f.label :description, "Description" %>
   <%= f.text_area :description %>

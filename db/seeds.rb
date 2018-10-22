@@ -10,3 +10,13 @@ User.destroy_all
 User.create(email: "admin@example.com", password: "12345678", role:'admin')
 
 puts 'admin user create'
+
+Article.destroy_all
+
+100.times do |i|
+  Article.create!(title: FFaker::Name.first_name,
+    description: FFaker::Lorem.paragraph
+  )
+end
+puts "have created fake articles"
+puts "now you have #{Article.count} articles data"
