@@ -12,7 +12,8 @@
     <% end %>
 
     <%= form_for @article do |f| %>
-
+      <%= f.collection_select :category_id, Category.all, :id, :name, {prompt: true}, {class: "form-control"} %>
+      
       <div class="form-group">
         <%= f.label :title, "Name" %>
         <%= f.text_field :title, class: "form-control" %>
