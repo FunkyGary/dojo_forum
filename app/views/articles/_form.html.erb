@@ -11,7 +11,7 @@
       <hr>
     <% end %>
 
-    <%= form_for [:admin, @article] do |f| %>
+    <%= form_for @article do |f| %>
 
       <div class="form-group">
         <%= f.label :title, "Name" %>

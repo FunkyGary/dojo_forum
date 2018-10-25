@@ -22,6 +22,8 @@ category_list.each do |category|
   Category.create( name: category[:name] )
 end
 
+puts "Category created!"
+
 Article.destroy_all
 
 100.times do 
@@ -35,4 +37,3 @@ puts "have created fake articles"
 puts "now you have #{Article.count} articles data"
 
 
-puts "Category created!"

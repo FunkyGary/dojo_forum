@@ -3,7 +3,7 @@
     <div class="col-md-12">
       <h1><%= @article.title %></h1>
     </div>
-
+    <%= @article.category.name %>
     <div class="col-md-4">
       <%= image_tag @article.image.url, class: "img-responsive center-block" %>
       <br>
