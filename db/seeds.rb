@@ -10,17 +10,6 @@ User.create(email: "admin@example.com", password: "12345678", role:'admin')
 
 puts 'admin user create'
 
-Article.destroy_all
-
-100.times do 
-  Article.create!(
-    title:  FFaker::LoremCN.sentence,
-    description: FFaker::LoremCN.paragraph,
-  )
-end
-puts "have created fake articles"
-puts "now you have #{Article.count} articles data"
-
 Category.destroy_all
 
 category_list = [
@@ -32,4 +21,18 @@ category_list = [
 category_list.each do |category|
   Category.create( name: category[:name] )
 end
+
+Article.destroy_all
+
+100.times do 
+  Article.create!(
+    title:  FFaker::LoremCN.sentence,
+    description: FFaker::LoremCN.paragraph,
+    category: Category.all.sample,
+  )
+end
+puts "have created fake articles"
+puts "now you have #{Article.count} articles data"
+
+
 puts "Category created!"
