@@ -34,10 +34,11 @@ gem 'carrierwave'
 gem 'ffaker'
 # Use ActiveStorage variant
 # gem 'mini_magick', '~> 4.8'
-
+# CSS
+gem 'bootstrap-sass'
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development
-
+gem 'jquery-rails'
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.1.0', require: false
 

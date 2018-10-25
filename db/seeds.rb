@@ -13,9 +13,10 @@ puts 'admin user create'
 
 Article.destroy_all
 
-100.times do |i|
-  Article.create!(title: FFaker::Name.first_name,
-    description: FFaker::Lorem.paragraph
+100.times do 
+  Article.create!(
+    title:  FFaker::LoremCN.sentence,
+    description: FFaker::LoremCN.paragraph,
   )
 end
 puts "have created fake articles"

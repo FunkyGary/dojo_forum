@@ -1,4 +1,4 @@
 class Article < ApplicationRecord
-  validates_presence_of :name
+  validates_presence_of :title
   mount_uploader :image, PhotoUploader
 end
