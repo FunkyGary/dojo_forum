@@ -1,0 +1,32 @@
+  <div class="col-md-12">
+
+      <div>
+        <%= link_to 'New Article', new_article_path, class: "btn btn-primary" %>
+      </div>
+      <br>
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Category</th>
+            <th>Name</th>
+            <th>#</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @articles.each do |article| %>
+          <tr>
+            <th scope="row"><%= article.id %></th>
+            <td>[<%= article.category.name %>]</td>
+            <td><%= article.title %></td>
+            <td>
+              <%= link_to 'Show', article_path(article) %>
+              <%= link_to 'Edit', edit_article_path(article) %>
+              <%= link_to 'Delete', article_path(article), method: :delete, data: { confirm: "Are you sure?"} %>
+            </td>
+          </tr>
+          <% end %>
+        </tbody>
+      </table>
+      <%= paginate @articles %>
+    </div>

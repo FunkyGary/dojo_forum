@@ -1,3 +1,27 @@
 // Place all the styles related to the articles controller here.
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
+.nav-pills-center {
+  text-align: center;
+}
+
+.nav-pills-center > li {
+  float: none;
+  display: inline-block;
+}
+
+.article-item {
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  padding: 4px;
+  margin-bottom: 20px;
+}
+
+.article-item img {
+  max-height: 180px;
+  width: 100%;
+}
+
+.article-item .caption {
+  padding: 10px;
+}
