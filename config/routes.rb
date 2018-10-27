@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   devise_for :users
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   root 'articles#index'
-  resources :articles
+  resources :articles do
+    resources :comments
+  end
   resources :categories   # 請加入此行
   namespace :admin do
     resources :articles
