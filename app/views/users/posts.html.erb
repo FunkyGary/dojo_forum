@@ -25,10 +25,10 @@
 
       <br>
       <ul class="nav nav-tabs">
-        <li role="presentation">
+        <li role="presentation" class="active">
           <%= link_to 'My post', posts_user_path %>
         </li>
-        <li role="presentation" class="active">
+        <li role="presentation">
           <%= link_to 'My comment', comments_user_path %>
         </li>
       </ul>
@@ -36,10 +36,10 @@
         <!-- 顯示已評論餐廳的清單 -->
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title"><strong><%= @commented_articles.count %></strong> 已評論餐廳</h3>
+            <h3 class="panel-title"><strong><%= @articles.count %></strong> 文章</h3>
           </div>
           <div class="panel-body">
-            <% @commented_articles.each do |article| %>
+            <% @articles.each do |article| %>
             <%= link_to article_path(article) do %>
             <div class="my-restaurant">
               <div>

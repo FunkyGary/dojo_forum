@@ -1,8 +1,16 @@
 class UsersController < ApplicationController
-  before_action :set_user, only: [:show, :edit, :update]
+  before_action :set_user, only: [:show, :edit, :update, :comments, :posts]
 
   def show
-    @commented_articles = @user.articles.uniq
+    @commented_articles = @user.commented_articles.uniq
+  end
+
+  def comments
+    @commented_articles = @user.commented_articles.uniq
+  end
+
+  def posts
+    @articles = @user.articles.uniq
   end
 
   def edit

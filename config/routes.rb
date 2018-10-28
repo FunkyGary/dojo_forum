@@ -9,7 +9,15 @@ Rails.application.routes.draw do
       get :feeds
     end
   end
-  resources :users
+  resources :users do
+    member do
+      get :posts
+      get :comments
+      get :collects
+      get :drafts
+      get :friends
+    end
+  end
   resources :categories   # 請加入此行
   namespace :admin do
     resources :articles

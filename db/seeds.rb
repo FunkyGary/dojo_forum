@@ -38,15 +38,20 @@ puts "Category created!"
 
 Article.destroy_all
 
-100.times do 
-  Article.create!(
-    title:  FFaker::LoremCN.sentence,
-    description: FFaker::LoremCN.paragraph,
-    category: Category.all.sample,
-  )
+User.all.each do |user|
+  10.times do |i|
+    user.articles.create!(
+      title:  FFaker::LoremCN.sentence,
+      description: FFaker::LoremCN.paragraph,
+      category: Category.all.sample,
+    )
+  end
 end
+
 puts "have created fake articles"
 puts "now you have #{Article.count} articles data"
+
+Comment.destroy_all
 
 Article.all.each do |article|
   3.times do |i|

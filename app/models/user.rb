@@ -4,8 +4,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   mount_uploader :avatar, AvatarUploader
-  has_many :comments
-  has_many :articles, through: :comments
+  has_many :comments, dependent: :restrict_with_error
+  has_many :commented_articles, through: :comments, source: :article
+  has_many :favorites, dependent: :destroy
+  has_many :favorited_articles, through: :favorites, source: :article
+  has_many :articles
   def admin?
     self.role == "admin"
   end

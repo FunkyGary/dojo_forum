@@ -41,11 +41,17 @@ class ArticlesController < ApplicationController
     flash[:alert] = "article was deleted"
   end
 
+  def feeds
+    @recent_articles = Article.order(created_at: :desc).limit(10)
+    @recent_comments = Comment.order(created_at: :desc).limit(10)
+  end
+
   private
 
   def article_params
     params.require(:article).permit(:title, :description, :image, :category_id)
   end
+  
   def set_article
     @article = Article.find(params[:id])
   end
