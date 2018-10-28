@@ -8,6 +8,11 @@ Rails.application.routes.draw do
     collection do
       get :feeds
     end
+    member do
+      # 其他程式碼
+      post :favorite
+      post :unfavorite
+    end
   end
   resources :users do
     member do
