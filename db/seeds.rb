@@ -6,8 +6,20 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-User.create(email: "admin@example.com", password: "12345678", role:'admin')
+User.destroy_all
 
+20.times do |i|
+  user_name = FFaker::Name.first_name
+  User.create!(
+    email: "#{user_name}@example.com",
+    password: "12345678",
+    intro: FFaker::Lorem.sentence,
+  )
+end
+puts "have created fake users"
+puts "now you have #{User.count} users data"
+
+User.create(email: "admin@example.com", password: "12345678", role:'admin', intro: FFaker::Lorem.sentence )
 puts 'admin user create'
 
 Category.destroy_all
@@ -36,4 +48,14 @@ end
 puts "have created fake articles"
 puts "now you have #{Article.count} articles data"
 
+Article.all.each do |article|
+  3.times do |i|
+    article.comments.create!(
+      content: FFaker::Lorem.sentence,
+      user: User.all.sample
+    )
+  end
+end
+puts "have created fake comments"
+puts "now you have #{Comment.count} comment data"
 

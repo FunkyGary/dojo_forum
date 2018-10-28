@@ -9,9 +9,7 @@
       <br>
       <div class="well">
         <ul class="list-unstyled">
-          <li><strong>Opening Hour:</strong></li>
-          <li><strong>Tel:</strong></li>
-          <li><strong>Address:</strong></li>
+          <li><strong>intro:</strong></li>
         </ul>
       </div>
     </div>
@@ -26,6 +24,7 @@
           <em><%= comment.created_at %> </em>
         </p>
         <% if current_user.comments %>
+          <%= link_to 'Edit', edit_article_comment_path(@article, comment) %>
           <%= link_to "Delete", article_comment_path(@article, comment), method: :delete %>
         <% end %>
       </div>
