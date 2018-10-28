@@ -28,6 +28,8 @@
           <% @article.comments.each do |comment| %>
             <div>
               <h4><%= comment.user.email %></h4>
+              <%= link_to 'Add friend', user_friendships_path(following_id: comment.user.id, user_id: current_user.id), method: :post %>
+              <%= link_to 'Unfollow', user_friendship_path(following_id: comment.user.id, user_id: current_user.id), method: :delete %>
               <p><%= simple_format comment.content %></p>
               <p class="text-muted">
                 <em><%= comment.created_at %> </em>
