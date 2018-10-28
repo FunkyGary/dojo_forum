@@ -9,6 +9,8 @@ class User < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :favorited_articles, through: :favorites, source: :article
   has_many :articles
+  has_many :friendships, dependent: :destroy
+  has_many :friends, through: :friendships
   def admin?
     self.role == "admin"
   end

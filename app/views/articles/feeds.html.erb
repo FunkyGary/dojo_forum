@@ -1,31 +1,10 @@
 <div class="container">
   <div class="row">
 
-    <!-- 使用 Bootstrap components 的 Nav Tabs -->
-    <!-- https://getbootstrap.com/docs/3.3/components/#nav-tabs -->
-    <ul class="nav nav-tabs">
-      <li role="presentation">
-        <%= link_to '首頁', root_path %>
-      </li>
-      <li role="presentation" class="active">
-        <%= link_to '最新動態', feeds_articles_path %>
-      </li>
-    </ul>
-
-  </div>
-</div>
-
-<br>
-
-<div class="container">
-  <div class="row">
-
     <div class="col-md-10 col-md-offset-1">
-      <h1>最新動態</h1>
-      <hr>
       <div class="col-md-6">
         <div class="panel panel-default">
-          <div class="panel-heading">最新文章</div>
+          <div class="panel-heading">Most Popular Post</div>
           <div class="panel-body">
             <% @recent_articles.each do |article| %>
               <div>

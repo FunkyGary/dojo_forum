@@ -1,6 +1,6 @@
 class ArticlesController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_article, only: [:show, :edit, :update, :destroy]
+  before_action :set_article, only: [:show, :edit, :update, :destroy, :favorite, :unfavorite]
 
   def index
     @articles = Article.page(params[:page]).per(10)
@@ -42,8 +42,21 @@ class ArticlesController < ApplicationController
   end
 
   def feeds
-    @recent_articles = Article.order(created_at: :desc).limit(10)
+    @recent_articles = Article.order(favorites_count: :desc).limit(10)
     @recent_comments = Comment.order(created_at: :desc).limit(10)
+  end
+
+  def favorite
+    @article.favorites.create!(user: current_user)
+    @article.count_favorites
+    redirect_back(fallback_location: root_path)  # 導回上一頁
+  end
+
+  def unfavorite
+    favorites = Favorite.where(article: @article, user: current_user)
+    favorites.destroy_all
+    @article.count_favorites
+    redirect_back(fallback_location: root_path)
   end
 
   private
@@ -51,7 +64,7 @@ class ArticlesController < ApplicationController
   def article_params
     params.require(:article).permit(:title, :description, :image, :category_id)
   end
-  
+
   def set_article
     @article = Article.find(params[:id])
   end
