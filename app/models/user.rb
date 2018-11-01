@@ -25,6 +25,11 @@ class User < ApplicationRecord
   has_many :not_yet_responded_friendships, -> {where status: false}, class_name: "Friendship", foreign_key: "friend_id", dependent: :destroy
   has_many :not_yet_responded_friends, through: :not_yet_responded_friendships, source: :user
 
+  before_create :generate_authentication_token
+  def generate_authentication_token
+    self.authentication_token = Devise.friendly_token
+ end
+
   def admin?
     self.role == "admin"
   end

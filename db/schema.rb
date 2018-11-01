@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2018_10_31_105438) do
+ActiveRecord::Schema.define(version: 2018_11_01_171237) do
 
   create_table "articles", force: :cascade do |t|
     t.string "title"
@@ -70,6 +70,8 @@ ActiveRecord::Schema.define(version: 2018_10_31_105438) do
     t.text "intro"
     t.string "avatar"
     t.integer "comment_counts", default: 0
+    t.string "authentication_token"
+    t.index ["authentication_token"], name: "index_users_on_authentication_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
