@@ -33,6 +33,28 @@ class Api::V1::PostsController < ApiController
       }
     end
   end
+  
+  def update
+    @post = Article.find_by(id: params[:id])
+    if @post.update(post_params)
+      render json: {
+        message: "Post updated successfully!",
+        result: @post
+      }
+    else
+      render json: {
+        errors: @post.errors
+      }
+    end
+  end
+
+  def destroy
+    @post = Article.find_by(id: params[:id])
+    @post.destroy
+    render json: {
+      message: "Post destroy successfully!"
+    }
+  end
 
   private
 
