@@ -15,9 +15,9 @@
       <%= image_tag @article.image.url, class: "img-responsive center-block" %>
       <%= simple_format @article.description %>
       <% if @article.is_favorited?(current_user) %>
-        <%= link_to 'Unfavorite', unfavorite_article_path(@article), method: :post, class: "btn btn-info" %>
+        <%= link_to 'Uncollect', unfavorite_article_path(@article), method: :post, class: "btn btn-info" %>
       <% else %>
-        <%= link_to 'Favorite', favorite_article_path(@article), method: :post, class: "btn btn-primary" %>
+        <%= link_to 'Collect', favorite_article_path(@article), method: :post, class: "btn btn-primary" %>
       <% end %>
     </div>
 
@@ -28,15 +28,24 @@
           <% @article.comments.each do |comment| %>
             <div>
               <h4><%= comment.user.email %></h4>
-              <%= link_to 'Add friend', user_friendships_path(following_id: comment.user.id, user_id: current_user.id), method: :post %>
-              <%= link_to 'Unfollow', user_friendship_path(following_id: comment.user.id, user_id: current_user.id), method: :delete %>
+              <% if comment.user != current_user %>
+                <% if current_user.friend?(comment.user)%>
+
+                <% elsif current_user.not_yet_accepted_friends?(comment.user)%>
+                
+                <% elsif current_user.not_yet_responded_friends?(comment.user)%>
+
+                <%else%>
+                  <%= link_to "Add Friend", friendships_path(friend_id: comment.user.id), class: "btn btn-outline-secondary", method: :post%>
+                <%end%>
+              <%end%>
               <p><%= simple_format comment.content %></p>
               <p class="text-muted">
                 <em><%= comment.created_at %> </em>
               </p>
               <% if current_user.comments %>
-                <%= link_to 'Edit', edit_article_comment_path(@article, comment) %>
-                <%= link_to "Delete", article_comment_path(@article, comment), method: :delete %>
+                <%= link_to 'Edit', edit_article_comment_path(article_id: @article.id, comment_id: comment.id),  class: "fas fa-trash-alt btn btn-primary bold float-right margin-10" %>
+                <%= link_to "Delete", article_comment_path(article_id: @article.id, comment_id: comment.id), class: "fas fa-trash-alt btn btn-primary bold float-right margin-10", method: :delete, data: { confirm: "Are You Sure？" }%>
               <% end %>
             </div>
             <hr>

@@ -22,12 +22,27 @@ Rails.application.routes.draw do
       get :drafts
       get :friends
     end
-    resources :friendships, only: [:create, :destroy]
+  end
+  resources :friendships, only: :create do
+    member do 
+      post :accept
+      delete :ignore
+    end
   end
   resources :categories   # 請加入此行
   namespace :admin do
+    resources :users, only: [:index, :update]
     resources :articles
     resources :categories   # 請加入此行
     root 'articles#index'
+  end
+  namespace :api, defaults: {format: :json} do
+    namespace :v1 do
+      
+      post "/login" => "auth#login"
+      post "/logout" => "auth#logout"
+
+      resources :posts, only: [:index, :create, :show, :update, :destroy]
+    end
   end
 end

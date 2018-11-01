@@ -25,13 +25,13 @@
 
       <br>
       <ul class="nav nav-tabs">
-        <li role="presentation" class="active">
+        <li role="presentation">
           <%= link_to 'My Post', posts_user_path %>
         </li>
         <li role="presentation">
           <%= link_to 'My Comment', comments_user_path %>
         </li>
-        <li role="presentation">
+        <li role="presentation" class="active">
           <%= link_to 'My Collect', collects_user_path %>
         </li>
         <li role="presentation">
@@ -45,10 +45,10 @@
         <!-- 顯示已評論餐廳的清單 -->
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title"><strong><%= @articles.count %></strong> 文章</h3>
+            <h3 class="panel-title"><strong><%= @collected_articles.count %></strong> 已收藏餐廳</h3>
           </div>
           <div class="panel-body">
-            <% @articles.each do |article| %>
+            <% @collected_articles.each do |article| %>
             <%= link_to article_path(article) do %>
             <div class="my-restaurant">
               <div>
@@ -57,10 +57,7 @@
               <h5><%= article.title %></h5>
             </div>
             <% end %>
-            <% if current_user == article.user || current_user.role == "Admin" %>
-              <%= link_to "Delete", article_path(article), class: "fas fa-trash-alt btn btn-primary bold float-right margin-10", method: :delete, data: { confirm: "Are You Sure？" }%>
-              <%= link_to "Edit", edit_article_path(article), class: "fas fa-edit btn btn-primary bold float-right margin-10"%>
-            <%end%>
+
             <% end %>
           </div>
         </div>

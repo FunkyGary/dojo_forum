@@ -1,19 +1,30 @@
 class CommentsController < ApplicationController
-  before_action :set_article, only: [:edit, :create, :update, :destroy]
-  before_action :set_comment, only: [:edit, :update, :destroy]
+  before_action :authenticate_user!
   
 
   def create
+    @article = Article.find(params[:article_id])
     @comment = @article.comments.build(comment_params)
     @comment.user = current_user
+
+    @article.replies_count = @article.comments.size
+    @article.save
+
+    current_user.comment_counts = current_user.comments.size
+    current_user.save
+
     @comment.save!
     redirect_to article_path(@article)
   end
 
   def edit
+    @article = Article.find(params[:article_id])
+    @comment = Comment.where(article_id: @article).find(params[:comment_id])
   end
 
   def update
+    @article = Article.find(params[:id])
+    @comment = Comment.where(article_id: @article).find(params[:article_id])
     if @comment.update(comment_params)
       flash[:notice] = "comment was successfully updated"
       redirect_to article_path(@article)
@@ -24,7 +35,15 @@ class CommentsController < ApplicationController
   end
 
   def destroy
+    @article = Article.find(params[:article_id])
+    @comment = Comment.where(article_id: @article).find(params[:comment_id])
     if current_user.comments
+      @article.replies_count = @article.comments.size
+      @article.save
+  
+      current_user.comment_counts = current_user.comments.size
+      current_user.save
+
       @comment.destroy
       redirect_to article_path(@article)
     end
@@ -34,14 +53,5 @@ class CommentsController < ApplicationController
 
   def comment_params
     params.require(:comment).permit(:content)
-  end
-
-  def set_comment
-    @comment = Comment.find(params[:id])
-  end
-
-  def set_article
-    @comment = Comment.find(params[:id])
-    @article = Article.find(@comment.article_id)
   end
 end

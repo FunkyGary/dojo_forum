@@ -1,5 +1,5 @@
 class ArticlesController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:index]
   before_action :set_article, only: [:show, :edit, :update, :destroy, :favorite, :unfavorite]
 
   def index
@@ -11,16 +11,43 @@ class ArticlesController < ApplicationController
   end
   def create
     @article = Article.new(article_params)
-    if @article.save
-      flash[:notice] = "article was successfully created"
-      redirect_to articles_path
+    @article.user = current_user
+    if params[:commit] == "Publish"
+      @article.public = true
+      if @article.save
+        redirect_to root_path
+      else
+        flash.now[:alert]= @article.errors.full_messages.to_sentence
+        render :edit
+      end
     else
-      flash.now[:alert] = "article was failed to create"
-      render :new
+      @article.public = false
+      if @article.save
+        redirect_to drafts_user_path(current_user)
+      else
+        flash.now[:alert]= @article.errors.full_messages.to_sentence
+        render :edit
+      end
     end
   end
+
+  def drafts
+    @article = Article.new(article_params)
+    @article.user = current_user
+    @article.public = false
+    if @article.save
+      redirect_to drafts_user_path(current_user)
+      binding.pry
+    else
+      flash.now[:alert]= @article.errors.full_messages.to_sentence
+      render :edit
+    end
+  end
+
   def show
     @comment = Comment.new
+    @article.viewed_count += 1
+    @article.save
   end
   def edit
   end
@@ -42,8 +69,11 @@ class ArticlesController < ApplicationController
   end
 
   def feeds
-    @recent_articles = Article.order(favorites_count: :desc).limit(10)
-    @recent_comments = Comment.order(created_at: :desc).limit(10)
+    @user_count = User.count
+    @article_count = Article.count
+    @comment_count = Comment.count
+    @populararticles = Article.order(replies_count: :desc).limit(10)
+    @activeusers = User.order(comment_counts: :desc).limit(10)
   end
 
   def favorite
