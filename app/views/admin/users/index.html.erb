@@ -27,7 +27,7 @@
             <td class="bold"><%= user.email %></td>
             <td>
               <%= form_for [:admin, user], url: admin_user_path(id: user.id), method: :put do |f| %>
-                <%= f.select :role, ["Normal","Admin"]%>
+                <%= f.select :role, ["normal","admin"]%>
                 <%= f.submit class: "btn btn-primary"%>
               <%end%>
             </td>

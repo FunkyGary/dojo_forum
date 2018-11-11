@@ -2,11 +2,13 @@ class CategoriesController < ApplicationController
   before_action :authenticate_user!
   def index
     @categories = Category.all
-    @articles = Article.page(params[:page]).per(9)
+    @articles = Article.page(params[:page]).per(20)
   end
   def show
-    @categories = Category.all
     @category = Category.find(params[:id])
-    @articles = @category.articles.page(params[:page]).per(10)
+    @categories = Category.all
+
+    @q = @category.articles.where(public: true).ransack(params[:q])
+    @articles = @q.result(distinct: true).page(params[:page]).per(20).order(updated_at: :desc)
   end
 end

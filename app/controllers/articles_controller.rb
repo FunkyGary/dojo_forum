@@ -3,7 +3,8 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy, :favorite, :unfavorite]
 
   def index
-    @articles = Article.page(params[:page]).per(10)
+    @q = Article.where(public: true).ransack(params[:q])
+    @articles = @q.result(distinct: true).page(params[:page]).per(20).order(created_at: :asc)
     @categories = Category.all
   end
   def new
@@ -48,6 +49,7 @@ class ArticlesController < ApplicationController
     @comment = Comment.new
     @article.viewed_count += 1
     @article.save
+    @comments = @article.comments.page(params[:page]).per(20)
   end
   def edit
   end

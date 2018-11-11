@@ -2,32 +2,30 @@
   <div class="row">
     <div class="col-md-12">
       <h1><%= @article.title %></h1>
-    </div>
-    <div class="col-md-4">
-      <br>
-      <div class="well">
-        <ul class="list-unstyled">
-          <li><strong>category:<%= @article.category.name %></strong></li>
-        </ul>
-      </div>
-    </div>
-    <div class="col-md-8">
       <%= image_tag @article.image.url, class: "img-responsive center-block" %>
+      <p><strong>category:<%= @article.category.name %></strong></p>
+      <p><strong>author:<%= link_to @article.user.name, user_path(@article.user.id) %></strong></p>
       <%= simple_format @article.description %>
       <% if @article.is_favorited?(current_user) %>
         <%= link_to 'Uncollect', unfavorite_article_path(@article), method: :post, class: "btn btn-info" %>
       <% else %>
         <%= link_to 'Collect', favorite_article_path(@article), method: :post, class: "btn btn-primary" %>
       <% end %>
+      <% if current_user.admin? || @article.user == current_user %>
+        <%= link_to 'Delete', article_path(@article), method: :delete, data: { confirm: "Are you sure?"}, class: "btn btn-primary" %>
+      <% end %>
+      <% if @article.user == current_user %>
+        <%= link_to 'Edit', edit_article_path(@article), class: "btn btn-primary" %>
+      <% end %>
     </div>
-
 
     <div class="clearfix"></div>
       <div class="container">
         <div class="row">
-          <% @article.comments.each do |comment| %>
+          <% @comments.each do |comment| %>
+            <hr>
             <div>
-              <h4><%= comment.user.email %></h4>
+              <h4><%= link_to comment.user.name, user_path(comment.user.id) %></h4>
               <% if comment.user != current_user %>
                 <% if current_user.friend?(comment.user)%>
 
