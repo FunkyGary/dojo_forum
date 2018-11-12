@@ -43,13 +43,17 @@ User.all.each do |user|
     user.articles.create!(
       title:  FFaker::LoremCN.sentence,
       description: FFaker::LoremCN.paragraph,
-      category: Category.all.sample,
     )
   end
 end
 
 puts "have created fake articles"
 puts "now you have #{Article.count} articles data"
+
+Article.all.each do |article|
+  article.categories << Category.all.sample
+end
+puts "All article have categories"
 
 
 Article.all.each do |article|

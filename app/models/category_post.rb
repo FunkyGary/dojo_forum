@@ -1,2 +1,0 @@
-class CategoryPost < ApplicationRecord
-end

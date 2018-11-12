@@ -3,7 +3,6 @@
     <div class="col-md-12">
       <h1><%= @article.title %></h1>
       <%= image_tag @article.image.url, class: "img-responsive center-block" %>
-      <p><strong>category:<%= @article.category.name %></strong></p>
       <p><strong>author:<%= link_to @article.user.name, user_path(@article.user.id) %></strong></p>
       <%= simple_format @article.description %>
       <% if @article.is_favorited?(current_user) %>
@@ -28,11 +27,11 @@
               <h4><%= link_to comment.user.name, user_path(comment.user.id) %></h4>
               <% if comment.user != current_user %>
                 <% if current_user.friend?(comment.user)%>
-
+                  <p>已經是朋友</p>
                 <% elsif current_user.not_yet_accepted_friends?(comment.user)%>
-                
+                  <p>送出交友邀請</p>
                 <% elsif current_user.not_yet_responded_friends?(comment.user)%>
-
+                  <p>尚未確認交友邀請</p>
                 <%else%>
                   <%= link_to "Add Friend", friendships_path(friend_id: comment.user.id), class: "btn btn-outline-secondary", method: :post%>
                 <%end%>

@@ -22,7 +22,6 @@
         <thead>
           <tr>
             <th>#</th>
-            <th>Category</th>
             <th>Name</th>
             <th>#</th>
           </tr>
@@ -31,7 +30,6 @@
           <% @articles.each do |article| %>
           <tr>
             <th scope="row"><%= article.id %></th>
-            <td>[<%= article.category.name %>]</td>
             <td><%= article.title %></td>
             <td>
               <%= link_to 'Show', article_path(article) %>

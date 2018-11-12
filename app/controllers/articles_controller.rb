@@ -3,7 +3,7 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy, :favorite, :unfavorite]
 
   def index
-    @q = Article.where(public: true).ransack(params[:q])
+    @q = Article.where(public: true).where(authority: "all").authorized_articles(current_user).ransack(params[:q])
     @articles = @q.result(distinct: true).page(params[:page]).per(20).order(created_at: :asc)
     @categories = Category.all
   end
@@ -11,7 +11,7 @@ class ArticlesController < ApplicationController
     @article = Article.new
   end
   def create
-    @article = Article.new(article_params)
+    @article = Article.create(article_params)
     @article.user = current_user
     if params[:commit] == "Publish"
       @article.public = true
@@ -94,7 +94,7 @@ class ArticlesController < ApplicationController
   private
 
   def article_params
-    params.require(:article).permit(:title, :description, :image, :category_id)
+    params.require(:article).permit(:title, :description, :image, :authority , :category_ids => [])
   end
 
   def set_article

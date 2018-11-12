@@ -30,7 +30,15 @@
       </div>
 
       <div class="form-group">
-        <%= f.collection_check_boxes :category_id, Category.all, :id, :name%>
+        <p>Who Can See</p>
+        <%= f.radio_button :authority, "all"%> all
+        <%= f.radio_button :authority, "friend"%> friend
+        <%= f.radio_button :authority, "myself"%> myself
+      </div>
+
+      <div class="form-group">
+        <p>Category:</p>
+        <%= f.collection_check_boxes :category_ids, Category.all, :id, :name %>
       </div>
 
       <div class="form-group">
