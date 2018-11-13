@@ -3,8 +3,13 @@ class ArticlesController < ApplicationController
   before_action :set_article, only: [:show, :edit, :update, :destroy, :favorite, :unfavorite]
 
   def index
-    @q = Article.where(public: true).where(authority: "all").authorized_articles(current_user).ransack(params[:q])
-    @articles = @q.result(distinct: true).page(params[:page]).per(20).order(created_at: :asc)
+    if current_user
+      @q = Article.where(public: true).where(authority: "all").authorized_articles(current_user).ransack(params[:q])
+      @articles = @q.result(distinct: true).page(params[:page]).per(20).order(created_at: :asc)
+    else
+      @q = Article.where(public: true).where(authority: "all").ransack(params[:q])
+      @articles = @q.result(distinct: true).page(params[:page]).per(20).order(created_at: :asc)
+   end
     @categories = Category.all
   end
   def new
